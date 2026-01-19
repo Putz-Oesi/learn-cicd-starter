@@ -31,3 +31,4 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	}
 w.WriteHeader(code)
 _, _ = w.Write(dat)
+}
