@@ -1,8 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
+# Load .env locally if present (CI uses GitHub secret env)
 if [ -f .env ]; then
-    source .env
+  set -a
+  source .env
+  set +a
 fi
 
-cd sql/schema
-goose turso $DATABASE_URL up
+: "${DATABASE_URL:?DATABASE_URL is not set}"
+
+goose -dir sql/schema turso "$DATABASE_URL" up
